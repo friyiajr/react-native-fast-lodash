@@ -5,17 +5,20 @@ lodash reimplemented in C++ for React Native apps
 ## Installation
 
 ```sh
-npm install react-native-fast-lodash
+yarn add react-native-fast-lodash
 ```
 
 ## Usage
 
 ```js
-import { multiply } from "react-native-fast-lodash";
+import { gcd } from 'react-native-fast-lodash';
 
 // ...
 
-const result = await multiply(3, 7);
+const gcdVal = gcd({
+  a: firstVal,
+  b: secondVal,
+});
 ```
 
 ## Contributing
