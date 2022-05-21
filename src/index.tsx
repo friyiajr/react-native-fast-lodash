@@ -1,22 +1,11 @@
-import { NativeModules, Platform } from 'react-native';
+// @ts-nocheck
 
-const LINKING_ERROR =
-  `The package 'react-native-fast-lodash' doesn't seem to be linked. Make sure: \n\n` +
-  Platform.select({ ios: "- You have run 'pod install'\n", default: '' }) +
-  '- You rebuilt the app after installing the package\n' +
-  '- You are not using Expo managed workflow\n';
+import { NativeModules } from 'react-native';
 
-const FastLodash = NativeModules.FastLodash
-  ? NativeModules.FastLodash
-  : new Proxy(
-      {},
-      {
-        get() {
-          throw new Error(LINKING_ERROR);
-        },
-      }
-    );
+NativeModules.FastLodash.install()
 
-export function multiply(a: number, b: number): Promise<number> {
-  return FastLodash.multiply(a, b);
+export function gcd(values: object): number {
+  return global.jsiGcd(values);
 }
+
+

@@ -1,8 +1,11 @@
-#ifndef EXAMPLE_H
-#define EXAMPLE_H
+#ifndef react_native_lodash_h
+#define react_native_lodash_h
 
-namespace example {
-  int multiply(float a, float b);
-}
+#include <jsi/jsilib.h>
+#include <jsi/jsi.h>
 
-#endif /* EXAMPLE_H */
+using namespace facebook;
+
+void installMath(jsi::Runtime &rt);
+
+#endif

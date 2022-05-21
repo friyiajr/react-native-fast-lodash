@@ -1,19 +1,42 @@
 #import "FastLodash.h"
 #import "react-native-fast-lodash.h"
 
+
+#import "FastLodash.h"
+#import "react-native-fast-lodash.h"
+
+#import <React/RCTBridge+Private.h>
+#import <React/RCTUtils.h>
+#import <jsi/jsi.h>
+#import <ReactCommon/CallInvoker.h>
+#import <memory>
+
 @implementation FastLodash
+
+@synthesize bridge = _bridge;
+RCTCxxBridge *cxxBridge;
 
 RCT_EXPORT_MODULE()
 
-// Example method for C++
-// See the implementation of the example module in the `cpp` folder
-RCT_EXPORT_METHOD(multiply:(nonnull NSNumber*)a withB:(nonnull NSNumber*)b
-                  withResolver:(RCTPromiseResolveBlock)resolve
-                  withReject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(install)
 {
-    NSNumber *result = @(example::multiply([a floatValue], [b floatValue]));
+  installMath(*(facebook::jsi::Runtime *) cxxBridge.runtime);
+  return @true;
+}
 
-    resolve(result);
++ (BOOL)requiresMainQueueSetup {
+  return YES;
+}
+
+- (void)setBridge:(RCTBridge *)bridge {
+  _bridge = bridge;
+  _setBridgeOnMainQueue = RCTIsMainQueue();
+  cxxBridge = (RCTCxxBridge *)self.bridge;
+  
+  if(!cxxBridge.runtime) {
+    return;
+  }
+  
 }
 
 @end

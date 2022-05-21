@@ -22,20 +22,17 @@ public class FastLodashModule extends ReactContextBaseJavaModule {
         return NAME;
     }
 
-    static {
+    @ReactMethod(isBlockingSynchronousMethod = true)
+    public boolean install() {
         try {
-            // Used to load the 'native-lib' library on application startup.
             System.loadLibrary("cpp");
-        } catch (Exception ignored) {
+            long jsContextPointer = this.getReactApplicationContext().getJavaScriptContextHolder().get();
+            installNativeJsi(jsContextPointer);
+            return true;
+        } catch (Exception exception) {
+            return false;
         }
     }
 
-    // Example method
-    // See https://reactnative.dev/docs/native-modules-android
-    @ReactMethod
-    public void multiply(int a, int b, Promise promise) {
-        promise.resolve(nativeMultiply(a, b));
-    }
-
-    public static native int nativeMultiply(int a, int b);
+    private native void installNativeJsi(long jsContextNativePointer);
 }
