@@ -20,7 +20,7 @@ RCT_EXPORT_MODULE()
 
 RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(install)
 {
-  installMath(*(facebook::jsi::Runtime *) cxxBridge.runtime);
+  install(*(facebook::jsi::Runtime *) cxxBridge.runtime);
   return @true;
 }
 
