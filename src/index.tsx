@@ -2,10 +2,15 @@ import { NativeModules } from 'react-native';
 
 NativeModules.FastLodash.install();
 
-declare global {
-  function jsiGcd(values: object): number;
+function ceil(num: number, precision: number = 0): number {
+  return global.jsiCeil(num, precision);
 }
 
-export function gcd(values: object): number {
-  return global.jsiGcd(values);
+function floor(num: number, precision: number = 0): number {
+  return global.jsiFloor(num, precision);
 }
+
+export default {
+  ceil,
+  floor,
+};
