@@ -15,7 +15,7 @@ struct FirstModuleBridge: jni::JavaClass < FirstModuleBridge > {
     static void installNativeJsi(jni::alias_ref < jni::JObject > thiz, jlong jsiRuntimePtr) {
         auto jsiRuntime = reinterpret_cast < jsi::Runtime * > (jsiRuntimePtr);
 
-        installMath( * jsiRuntime);
+        install( * jsiRuntime);
     }
 
     static void registerNatives() {

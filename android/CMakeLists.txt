@@ -39,6 +39,7 @@ add_library(
   ${PACKAGE_NAME}
   SHARED
   ../cpp/react-native-fast-lodash.cpp
+  ../cpp/JsiMath/JsiMath.cpp
   cpp-adapter.cpp
   "${NODE_MODULES_DIR}/react-native/ReactCommon/jsi/jsi/jsi.cpp"
 )

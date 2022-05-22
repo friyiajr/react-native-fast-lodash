@@ -1,7 +1,6 @@
-
 import React, { FC, useState } from 'react';
 
-import { gcd } from 'react-native-fast-lodash';
+import _ from 'react-native-fast-lodash';
 
 import {
   View,
@@ -27,10 +26,7 @@ const App = () => {
   };
 
   const computeGcd = () => {
-    const gcdVal = gcd({
-      a: firstVal,
-      b: secondVal,
-    });
+    const gcdVal = _.ceil(firstVal, secondVal);
     Alert.alert(`Your GCD is: ${gcdVal}`);
   };
 

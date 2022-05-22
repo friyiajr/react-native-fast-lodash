@@ -6,6 +6,6 @@
 
 using namespace facebook;
 
-void installMath(jsi::Runtime &rt);
+void install(jsi::Runtime &rt);
 
 #endif
