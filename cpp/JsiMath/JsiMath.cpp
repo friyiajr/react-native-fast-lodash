@@ -1,14 +1,11 @@
 #include <cmath>
+#include <float.h>
 
 #include "JsiMath.h"
 
 using namespace facebook;
 
 /// Revieves a decimal number and a precision value then rounds up to that precision
-/// @param rt a reference to the runtime environment
-/// @param thisValue JavaScript this value context
-/// @param args arguments from JS
-/// @param count total number of arguments passed to the function
 JSI_HOST_FUNCTION(jsiCeil) {
   auto numberToRound = args[0].asNumber();
   
@@ -28,10 +25,6 @@ JSI_HOST_FUNCTION(jsiCeil) {
 };
 
 /// Revieves a decimal number and a precision value then rounds down to that precision
-/// @param rt a reference to the runtime environment
-/// @param thisValue JavaScript this value context
-/// @param args arguments from JS
-/// @param count total number of arguments passed to the function
 JSI_HOST_FUNCTION(jsiFloor) {
   auto numberToRound = args[0].asNumber();
   
@@ -50,6 +43,52 @@ JSI_HOST_FUNCTION(jsiFloor) {
   return jsi::Value(result);
 };
 
+/// Revieves an array of numbers and returns the max
+JSI_HOST_FUNCTION(jsiMax) {
+  auto rawArray = args[0].asObject(rt);
+  auto array = rawArray.asArray(rt);
+  
+  auto rawLength = rawArray.getProperty(rt, "length");
+  auto length = rawLength.asNumber();
+  
+  if(length == 0) {
+    return jsi::Value(nullptr);
+  }
+  
+  auto max = DBL_MIN;
+  
+  for(auto i = 0; i < length; i++) {
+    auto currentVal = array.getValueAtIndex(rt, i).asNumber();
+    if(currentVal > max) {
+      max = currentVal;
+    }
+  }
+  
+  return jsi::Value(max);
+}
+
+/// Revieves an array of numbers and returns the min
+JSI_HOST_FUNCTION(jsiMin) {
+  auto rawArray = args[0].asObject(rt);
+  auto values = rawArray.asArray(rt);
+  auto length = rawArray.getProperty(rt, "length");
+  
+  if(length.asNumber() == 0) {
+    return jsi::Value(nullptr);
+  }
+  
+  auto min = DBL_MAX;
+  
+  for(auto i = 0; i < length.asNumber(); i++) {
+    auto currentVal = values.getValueAtIndex(rt, i).asNumber();
+    if(currentVal < min) {
+      min = currentVal;
+    }
+  }
+  
+  return jsi::Value(min);
+}
+
 void installMath(jsi::Runtime & rt) {
   auto floorId = jsi::PropNameID::forAscii(rt, "floor");
   jsi::Function floor =
@@ -60,4 +99,14 @@ void installMath(jsi::Runtime & rt) {
   jsi::Function ceil =
     jsi::Function::createFromHostFunction(rt, ceilId, 1, jsiCeil);
   rt.global().setProperty(rt, "jsiCeil", ceil);
+  
+  auto maxId = jsi::PropNameID::forAscii(rt, "max");
+  jsi::Function max =
+    jsi::Function::createFromHostFunction(rt, maxId, 1, jsiMax);
+  rt.global().setProperty(rt, "jsiMax", max);
+  
+  auto minId = jsi::PropNameID::forAscii(rt, "min");
+  jsi::Function min =
+    jsi::Function::createFromHostFunction(rt, minId, 1, jsiMin);
+  rt.global().setProperty(rt, "jsiMin", min);
 }

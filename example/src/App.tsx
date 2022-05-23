@@ -26,8 +26,8 @@ const App = () => {
   };
 
   const computeGcd = () => {
-    const gcdVal = _.ceil(firstVal, secondVal);
-    Alert.alert(`Your GCD is: ${gcdVal}`);
+    const gcdVal = _.max([2, 88, 1, 4, 5]);
+    Alert.alert(`Your answer: ${gcdVal}`);
   };
 
   return (
