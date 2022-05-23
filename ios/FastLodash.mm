@@ -14,12 +14,12 @@
 @implementation FastLodash
 
 @synthesize bridge = _bridge;
-RCTCxxBridge *cxxBridge;
 
 RCT_EXPORT_MODULE()
 
 RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(install)
 {
+  RCTCxxBridge *cxxBridge = (RCTCxxBridge *)[RCTBridge currentBridge];
   install(*(facebook::jsi::Runtime *) cxxBridge.runtime);
   return @true;
 }
@@ -31,12 +31,6 @@ RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(install)
 - (void)setBridge:(RCTBridge *)bridge {
   _bridge = bridge;
   _setBridgeOnMainQueue = RCTIsMainQueue();
-  cxxBridge = (RCTCxxBridge *)self.bridge;
-  
-  if(!cxxBridge.runtime) {
-    return;
-  }
-  
 }
 
 @end
