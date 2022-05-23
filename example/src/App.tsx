@@ -13,6 +13,8 @@ import {
   Alert,
 } from 'react-native';
 
+const sampleVals = Array.from(Array(10000000).keys());
+
 const App = () => {
   const [firstVal, setFirstVal] = useState(1);
   const [secondVal, setSecondVal] = useState(1);
@@ -25,9 +27,22 @@ const App = () => {
     setSecondVal(Number(text));
   };
 
-  const computeGcd = () => {
-    const gcdVal = _.max([2, 88, 1, 4, 5]);
-    Alert.alert(`Your answer: ${gcdVal}`);
+  const max = (allNums: number[]) => {
+    let max = -9999;
+
+    for (let i = 0; i < allNums.length; i++) {
+      if (allNums[i] > max) {
+        max = allNums[i];
+      }
+    }
+
+    return max;
+  };
+
+  const computeResult = () => {
+    // const result = _.max(sampleVals);
+    const result = max(sampleVals);
+    Alert.alert(`Your answer: ${result}`);
   };
 
   return (
@@ -48,7 +63,7 @@ const App = () => {
           />
         </View>
         <View>
-          <Button title="Compute GCD" onPress={computeGcd} />
+          <Button title="Compute Result" onPress={computeResult} />
         </View>
       </View>
     </TouchableWithoutFeedback>
