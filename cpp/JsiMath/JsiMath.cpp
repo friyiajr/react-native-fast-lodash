@@ -75,16 +75,16 @@ JSI_HOST_FUNCTION(jsiMin) {
     return jsi::Value(nullptr);
   }
   
-  auto max = DBL_MAX;
+  auto min = DBL_MAX;
   
   for(auto i = 0; i < length.asNumber(); i++) {
     auto currentVal = values.getValueAtIndex(rt, i).asNumber();
-    if(currentVal < max) {
-      max = currentVal;
+    if(currentVal < min) {
+      min = currentVal;
     }
   }
   
-  return jsi::Value(max);
+  return jsi::Value(min);
 }
 
 void installMath(jsi::Runtime & rt) {
